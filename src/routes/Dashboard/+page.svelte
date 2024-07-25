@@ -1,8 +1,15 @@
 <script lang="ts">
+    import { isOverlayOpen } from "../../store/overlayStore";
     import Table from "$lib/Table.svelte";
+    import Overlay from "$lib/Overlay.svelte";
     export let data;
-    export let form;
 </script>
+
+{#if $isOverlayOpen}
+    <Overlay>
+        <div class=""></div>
+    </Overlay>
+{/if}
 
 <Table claims={data.claims} />
 <!-- claimId, claimDetails, status, timestamp -->

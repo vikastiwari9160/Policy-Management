@@ -1,5 +1,6 @@
 <script>
   export let claims;
+  import { isOverlayOpen } from "../store/overlayStore";
 </script>
 
 <div
@@ -41,11 +42,14 @@
             >{claim.createdAt.toString().split("GMT")[0]}</td
           >
           <td class="px-6 py-4 whitespace-nowrap">
-            <form method="GET" action="/dashboard/claims" class="inline-block">
+            <form method="GET" action="" class="inline-block">
               <input type="hidden" name="id" value={claim.claim_id} />
               <button
                 class=" bg-orange-500 hover:bg-blue-700 text-white font-bold px-2 py-1 rounded-xl"
                 type="submit"
+                on:click={() => {
+                  isOverlayOpen.set(true);
+                }}
               >
                 View Details
               </button>
