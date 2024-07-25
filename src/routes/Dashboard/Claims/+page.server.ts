@@ -5,9 +5,18 @@ import { POSTGRES_URL } from '$env/static/private'
 //     try {
 //         const fetchClaims = async () => {
 //             const res = await fetch('/api/claims');
-//             const data = res.json();
-//             console.log(data);
-//             return data.claims;
+//             // const responseState = res[Symbol('state')];
+//             // if (responseState && responseState.body && responseState.body.source) {
+//             //     const responseBody = responseState.body.source;
+//             //     const parsedBody = JSON.parse(responseBody);
+
+//             //     console.log(parsedBody);
+//             // } else {
+//             //     console.log(res.status);
+//             //     console.error('Body content is not available in the response.');
+//             // }
+//             console.log(res);
+//             return res.claims;
 //         }
 //         return {
 //             claims: fetchClaims()
@@ -35,10 +44,6 @@ export async function load() {
             claims: claims,
         }
     } catch (error) {
-        console.log(
-            'Table does not exist, creating and seeding it with dummy data now...'
-        )
-        // Table is not 0created yet
         await seed();
         const { rows: claims } = await db.query('SELECT * FROM claims')
         return {
@@ -59,28 +64,23 @@ async function seed() {
         status VARCHAR(255) DEFAULT 'Under Process',
         "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
         );`
-    console.log(`Created "claims" table`)
-
-    console.log("Seed runing");
     const claims = await Promise.all([
         client.sql`
           INSERT INTO claims (Claim_id,Amount,Description,Bill)
-          VALUES ('1', 100000 , '', 'https://www.myopd.in/blog/wp-content/uploads/2023/01/Provisional-Hospital-Bill.png')
+          VALUES ('1', 40 , '', 'https://www.myopd.in/blog/wp-content/uploads/2023/01/Provisional-Hospital-Bill.png')
           ON CONFLICT (Claim_id) DO NOTHING;
-      `,
+        `,
         client.sql`
           INSERT INTO claims (Claim_id,Amount,Description,Bill)
-          VALUES ('1', 150000 , '', 'https://www.myopd.in/blog/wp-content/uploads/2023/01/Provisional-Hospital-Bill.png')
+          VALUES ('2', 10 , '', 'https://www.myopd.in/blog/wp-content/uploads/2023/01/Provisional-Hospital-Bill.png')
           ON CONFLICT (Claim_id) DO NOTHING;
-      `,
+        `,
         client.sql`
           INSERT INTO claims (Claim_id,Amount,Description,Bill)
-          VALUES ('1', 220000 , '', 'https://www.myopd.in/blog/wp-content/uploads/2023/01/Provisional-Hospital-Bill.png')
+          VALUES ('3', 15 , '', 'https://www.myopd.in/blog/wp-content/uploads/2023/01/Provisional-Hospital-Bill.png')
           ON CONFLICT (Claim_id) DO NOTHING;
-      `,
+        `,
     ])
-    console.log(`Seeded ${claims.length} users`)
-
     return {
         createTable,
         claims,
