@@ -1,8 +1,9 @@
 <script lang="ts">
     import { isOverlayOpen } from "../../../store/overlayStore";
-    import Table from "$lib/Table.svelte";
+    import Table from "$lib/Table_claims.svelte";
     import Overlay from "$lib/Overlay.svelte";
     export let data;
+    export let form;
 </script>
 
 {#if $isOverlayOpen}
@@ -87,9 +88,7 @@
             </div>
         </div>
     </form>
-    <!-- {#if form?.success}
-        this message is ephemeral; it exists because the page was rendered in
-             response to a form submission. it will vanish if the user reloads
-        <p class="pt-2 text-green-600 font-semibold">Added new Applicant!</p>
-    {/if} -->
+    {#if form?.success}
+        <p class="pt-2">Added new Policy!</p>
+    {/if}
 </div>
