@@ -3,14 +3,7 @@
     class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
   >
     <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
-      <img
-        src="https://tsoc.dev/TSoC_Favicon.svg"
-        class="h-8"
-        alt="TSoC Logo"
-      />
-      <span class="self-center text-2xl font-semibold whitespace-nowrap"
-        >Policy Now
-      </span>
+      <img src="src/assets/insurance-chain.png" class=" h-8" alt="TSoC Logo" />
     </a>
     <button
       data-collapse-toggle="navbar-default"
@@ -69,11 +62,11 @@
           >
         </li>
         <li>
-          <a
-            href="/logout"
-            class="block mt-1 py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0"
-            >Logout</a
-          >
+          <button
+            class="bg-orange-500 hover:bg-blue-700 text-white font-bold px-2 py-1 rounded-xl"
+            style="display: none;"
+            >Logout
+          </button>
         </li>
       </ul>
     </div>

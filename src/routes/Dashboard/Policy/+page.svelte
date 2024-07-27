@@ -6,6 +6,10 @@
     export let form;
 </script>
 
+<svelte:head>
+    <title>Policy</title>
+</svelte:head>
+
 {#if $isOverlayOpen}
     <Overlay>
         <div class=" h-96 w-80"></div>
