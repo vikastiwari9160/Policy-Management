@@ -1,56 +1,36 @@
 import { createPool } from '@vercel/postgres'
 import { POSTGRES_URL } from '$env/static/private'
 
-// export async function load({ fetch }) {
+export async function load({ fetch }) {
+    const fetchClaims = async () => {
+        const res = await fetch('/api/claims');
+        const data = res.json();
+        console.log(data);
+        return data.claims;
+    }
+    return {
+        claims: fetchClaims()
+    }
+
+
+}
+
+
+// export async function load() {
+//     const db = createPool({ connectionString: POSTGRES_URL })
 //     try {
-//         const fetchClaims = async () => {
-//             const res = await fetch('/api/claims');
-//             // const responseState = res[Symbol('state')];
-//             // if (responseState && responseState.body && responseState.body.source) {
-//             //     const responseBody = responseState.body.source;
-//             //     const parsedBody = JSON.parse(responseBody);
-
-//             //     console.log(parsedBody);
-//             // } else {
-//             //     console.log(res.status);
-//             //     console.error('Body content is not available in the response.');
-//             // }
-//             console.log(res);
-//             return res.claims;
-//         }
+//         const { rows: claims } = await db.query('SELECT * FROM claims')
 //         return {
-//             claims: fetchClaims()
+//             claims: claims,
 //         }
-
 //     } catch (error) {
-//         console.log(
-//             'Table does not exist, creating and seeding it with dummy data now...'
-//         )
-//         // // Table is not 0created yet
-//         // await seed();
-//         // const { rows: claims } = await db.query('SELECT * FROM claims')
-//         // return {
-//         //     claims: claims
-//         // }
+//         await seed();
+//         const { rows: claims } = await db.query('SELECT * FROM claims')
+//         return {
+//             claims: claims
+//         }
 //     }
 // }
-
-
-export async function load() {
-    const db = createPool({ connectionString: POSTGRES_URL })
-    try {
-        const { rows: claims } = await db.query('SELECT * FROM claims')
-        return {
-            claims: claims,
-        }
-    } catch (error) {
-        await seed();
-        const { rows: claims } = await db.query('SELECT * FROM claims')
-        return {
-            claims: claims
-        }
-    }
-}
 
 async function seed() {
 
