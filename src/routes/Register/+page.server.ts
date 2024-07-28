@@ -1,8 +1,9 @@
 import { createPool } from '@vercel/postgres'
 import { POSTGRES_URL } from '$env/static/private'
+import type { RequestEvent } from './$types';
 
 export const actions = {
-    create: async ({ request }) => {
+    create: async ({ request }: RequestEvent) => {
         const data = await request.formData();
         const db = createPool({ connectionString: POSTGRES_URL })
         const client = await db.connect();
@@ -12,6 +13,7 @@ export const actions = {
         const password = data.get('password');
         const paymail = data.get('paymail');
 
+        if (!name || !email || !password || !paymail) { return { error: true, msg: "All fields are required!" } }
         try {
             const createuser = await client.sql`
             INSERT INTO users (name, email, password, paymail)
@@ -45,9 +47,5 @@ async function createUserTable() {
       "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     );
     `
-    const dummyuser = await client.sql`INSERT INTO users (name, email, password, paymail)
-        VALUES ('Dummy','Dummy@gmail.com','Dummy','Dummy@dev.neucron.io')
-        ON CONFLICT (email) DO NOTHING;
-    `
-    return { createTable, dummyuser }
+    return { createTable }
 }

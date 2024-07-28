@@ -91,8 +91,11 @@
                 >
             </div>
         </div>
+        {#if form?.success}
+            <p class="pt-2">A Claim has been raised!</p>
+        {/if}
+        {#if form?.error}
+            <p class="pt-2">${form?.msg}</p>
+        {/if}
     </form>
-    {#if form?.success}
-        <p class="pt-2">Added new Policy!</p>
-    {/if}
 </div>

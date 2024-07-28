@@ -8,6 +8,7 @@
 
 <div
     class="w-screen h-screen fixed top-0 left-0 flex justify-center items-center z-20"
+    role="button"
     on:click={() => {
         isOverlayOpen.set(false);
     }}

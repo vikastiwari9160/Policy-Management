@@ -1,17 +1,20 @@
 import { createPool } from '@vercel/postgres'
 import { POSTGRES_URL } from '$env/static/private'
+import { redirect } from '@sveltejs/kit'
 
-export async function load() {
+export async function load({ locals }) {
+    if (!locals.authUser) throw redirect(302, '/Login');
+
     const db = createPool({ connectionString: POSTGRES_URL })
-
+    const user = locals.authUser;
     try {
-        const { rows: policy } = await db.query('SELECT * FROM policy')
+        const { rows: policy } = await db.query(`SELECT * FROM policy where user_id= ${user.id}`)
         return {
             policy: policy,
         }
     } catch (error) {
         await seed()
-        const { rows: policy } = await db.query('SELECT * FROM policy')
+        const { rows: policy } = await db.query(`SELECT * FROM policy where user_id= ${user.id}`)
         return {
             policy: policy
         }
@@ -22,39 +25,20 @@ async function seed() {
     const db = createPool({ connectionString: POSTGRES_URL })
     const client = await db.connect();
     const createTable = await client.sql`CREATE TABLE IF NOT EXISTS policy  (
-      policy_id INT PRIMARY KEY,
-      provider VARCHAR(255) ,
-      coverage INT ,
-      "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+        policy_id INT PRIMARY KEY,
+        user_id INT ,
+        provider VARCHAR(255) ,
+        coverage INT ,
+        "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     );
     `
-    const policy = await Promise.all([
-        client.sql`
-          INSERT INTO policy (policy_id, provider,coverage)
-          VALUES (1, 'Vikas', 40)
-          ON CONFLICT (policy_id) DO NOTHING;
-      `,
-        client.sql`
-          INSERT INTO policy (policy_id, provider,coverage)
-          VALUES (2, 'Jay', 30)
-          ON CONFLICT (policy_id) DO NOTHING;
-      `,
-        client.sql`
-          INSERT INTO policy (policy_id, provider,coverage)
-          VALUES (3, 'Aditya', 25)
-          ON CONFLICT (policy_id) DO NOTHING;
-      `,
-    ])
-    console.log(`Seeded ${policy.length} users`)
-
     return {
         createTable,
-        policy,
     }
 }
 
 export const actions = {
-    create: async ({ request }) => {
+    create: async ({ request, locals }) => {
         const data = await request.formData();
         const db = createPool({ connectionString: POSTGRES_URL })
         const client = await db.connect();
@@ -62,10 +46,11 @@ export const actions = {
         const policy_id = data.get('policy_id');
         const provider = data.get('provider');
         const coverage = data.get('coverage');
+        const user_id = locals.authUser.id;
 
         const createpolicy = await client.sql`
-      INSERT INTO policy (policy_id, provider, coverage)
-      VALUES (${policy_id}, ${provider}, ${coverage})
+      INSERT INTO policy (policy_id,user_id, provider, coverage)
+      VALUES (${policy_id},${user_id}, ${provider}, ${coverage})
       ON CONFLICT (policy_id) DO NOTHING;
     `
         return { success: true };

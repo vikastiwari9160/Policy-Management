@@ -49,7 +49,7 @@
                     >
 
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <form method="GET" action="">
+                        <form method="GET" action="?/viewdetails">
                             <input
                                 type="hidden"
                                 name="id"

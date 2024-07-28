@@ -7,8 +7,11 @@
     class="mt-10 pt-10 w-full max-w-xl p-12 mx-auto rounded-lg shadow-xl dark:bg-white/10 bg-white/30 ring-1 ring-gray-900/5 backdrop-blur-lg"
 >
     <form method="POST" action="?/create">
-        <div class="flex flex-wrap -mx-3 mb-2">
-            <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+        <div
+            class="flex -mx-5 mb-2;"
+            style="display: flex; flex-direction:column"
+        >
+            <div class="w-full px-3 mb-6 md:mb-0">
                 <label
                     class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                     for="name"
@@ -23,7 +26,7 @@
                     name="name"
                 />
             </div>
-            <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+            <div class="w-full px-3 mb-6 md:mb-0">
                 <label
                     class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                     for="email"
@@ -38,7 +41,7 @@
                     name="email"
                 />
             </div>
-            <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+            <div class="w-full px-3 mb-6 md:mb-0">
                 <label
                     class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                     for="password"
@@ -53,7 +56,7 @@
                     name="password"
                 />
             </div>
-            <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+            <div class="w-full px-3 mb-6 md:mb-0">
                 <label
                     class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                     for="paymail"
@@ -70,7 +73,8 @@
             </div>
             <button
                 type="submit"
-                class="bg-yellow-500 hover:bg-blue-700 text-white font-bold mt-5 ml-2 px-2 rounded"
+                class="bg-yellow-500 hover:bg-blue-700 text-white font-bold mt-5 ml-2 px-10 rounded"
+                style="padding: 10px;"
             >
                 Register
             </button>
@@ -78,5 +82,8 @@
     </form>
     {#if form?.success}
         <p class="pt-2">User Registered!</p>
+    {/if}
+    {#if form?.error}
+        <p class="pt-2">${form?.msg}</p>
     {/if}
 </div>
