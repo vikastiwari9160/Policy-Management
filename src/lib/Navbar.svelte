@@ -4,7 +4,7 @@
   >
     <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
       <img
-        src="../../../src/assets/insurance-chain.png"
+        src="https://raw.githubusercontent.com/vikastiwari9160/Policy-Management/main/src/assets/insurance-chain.png"
         class=" h-8"
         alt="TSoC Logo"
       />
