@@ -23,7 +23,7 @@
 <section
     id="home"
     class="flex flex-col justify-center items-center text-center bg-cover bg-center h-screen text-white"
-    style="background-image: url('../../src/assets/homepage.png');"
+    style="background-image: url('https://raw.githubusercontent.com/vikastiwari9160/Policy-Management/main/src/assets/homepage.png');"
 >
     <h1 class="text-5xl font-bold">Welcome to Insurance Claim</h1>
     <p class="text-2xl mt-4 font-bold">
