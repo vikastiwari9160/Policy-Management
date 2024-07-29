@@ -52,7 +52,7 @@
             </div>
         </form>
         {#if form?.error}
-            <p class="pt-2">${form?.msg}</p>
+            <p class="pt-2">{form?.msg}</p>
         {/if}
     </div>
 </div>

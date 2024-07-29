@@ -3,6 +3,7 @@ import { POSTGRES_URL } from '$env/static/private'
 import { setuser } from '../../services/auth';
 import { redirect } from '@sveltejs/kit';
 import type { RequestEvent } from './$types';
+import { islogedin } from '../../store/loginStore';
 
 export const actions = {
     Login: async ({ request, cookies }: RequestEvent) => {
@@ -16,16 +17,15 @@ export const actions = {
         if (email == "" || password == "") {
             return { error: true, msg: "Both fields are required!" }
         }
-        try {
-            const { rows: users } = await client.sql`
-            Select * from users where email = ${email} AND password=${password};
-            `
-            const user = users[0];
-            if (!user) { return { error: true, msg: "User Not Found!" } }
-            let token = await setuser(user);
-            cookies.set('authtoken', token, { path: '/' });
-        } finally {
-            redirect(302, '/');
-        }
+        const { rows: users } = await client.sql`
+        Select * from users where email = ${email} AND password=${password};
+        `
+        const user = users[0];
+        console.log(user);
+        if (user == undefined) { return { error: true, msg: "User Not Found!" } }
+        let token = await setuser(user);
+        cookies.set('authtoken', token, { path: '/' });
+        islogedin.set(true);
+        redirect(302, '/Dashboard');
     }
 };
