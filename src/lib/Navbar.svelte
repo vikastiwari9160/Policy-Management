@@ -44,14 +44,14 @@
             >Home</a
           >
         </li>
-        <li>
+        <li id="login">
           <a
             href="/Login"
             class="block mt-1 py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0"
             >Login</a
           >
         </li>
-        <li>
+        <li id="register">
           <a
             href="/Register"
             class="block mt-1 py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0"
@@ -64,20 +64,6 @@
             class="block mt-1 py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0"
             >DashBoard</a
           >
-        </li>
-        <li>
-          <a
-            href="/AccountSettings"
-            class="block mt-1 py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0"
-            >Account Settings</a
-          >
-        </li>
-        <li>
-          <button
-            class="bg-orange-500 hover:bg-blue-700 text-white font-bold px-2 py-1 rounded-xl"
-            style="display: none;"
-            >Logout
-          </button>
         </li>
       </ul>
     </div>

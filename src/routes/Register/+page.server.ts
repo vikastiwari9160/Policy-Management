@@ -1,6 +1,7 @@
 import { createPool } from '@vercel/postgres'
 import { POSTGRES_URL } from '$env/static/private'
 import type { RequestEvent } from './$types';
+import { redirect } from '@sveltejs/kit';
 
 export const actions = {
     create: async ({ request }: RequestEvent) => {
@@ -20,7 +21,7 @@ export const actions = {
             VALUES (${name}, ${email}, ${password},${paymail})
             ON CONFLICT (email) DO NOTHING;
             `
-            return { success: "true" };
+            redirect(302, '/Login');
         }
         catch (err) {
             await createUserTable()
@@ -29,7 +30,7 @@ export const actions = {
             VALUES (${name}, ${email}, ${password},${paymail})
             ON CONFLICT (email) DO NOTHING;
             `
-            return { success: "true" };
+            redirect(302, '/Login');
         }
     }
 };

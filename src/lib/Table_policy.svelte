@@ -9,9 +9,6 @@
     <div class="flex items-center justify-between mb-4">
         <div class="space-y-1">
             <h2 class="text-xl font-semibold">List of policies</h2>
-            <p class="text-sm text-gray-500">
-                Fetched {policy.length} policies
-            </p>
         </div>
     </div>
     <table class="min-w-full divide-y divide-gray-200">

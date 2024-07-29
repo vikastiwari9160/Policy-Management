@@ -53,12 +53,12 @@ export const actions = {
 
         const { rows: policy } = await client.sql`Select * from policy where policy_id = ${claim_id} AND user_id= ${user_id}
         `
-        if (!policy) { return { error: true, msg: "Policy with the above ID does not exist!" } }
+        if (policy.length == 0) { return { error: true, msg: `Policy with the Id ${claim_id}  does not exist!` } }
 
         const createUser = await client.sql`
-      INSERT INTO claims (claim_id,user_id,amount,description,bill)
-      VALUES (${claim_id},${user_id},${amount},${desc}, ${bill})
-      ON CONFLICT (claim_id) DO NOTHING;
+        INSERT INTO claims (claim_id,user_id,amount,description,bill)
+        VALUES (${claim_id},${user_id},${amount},${desc}, ${bill})
+        ON CONFLICT (claim_id) DO NOTHING;
     `
         return { success: true };
     }
